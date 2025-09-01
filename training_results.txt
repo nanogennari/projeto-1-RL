@@ -4,12 +4,12 @@ Training Parameters:
 - Number of runs: 5
 - Epochs per run: 100
 - Steps per epoch: 1000
-- Learning rate: 0.1
+- Learning rate: 0.05
 - Discount factor: 0.9
-- Initial epsilon: 0.3
+- Initial epsilon: 0.1
 
 Environment Parameters:
-- Alpha (α): 0.7
+- Alpha (α): 0.9
 - Beta (β): 0.6
 - r_search: 3.0
 - r_wait: 1.0
@@ -19,10 +19,10 @@ Final Policy:
 - State.LOW: recharge
 
 Final Q-Values:
-- Q(high, search): 23.4565
-- Q(high, wait): 21.8308
-- Q(low, search): 20.2365
-- Q(low, wait): 19.8240
-- Q(low, recharge): 20.8086
+- Q(high, search): 27.2476
+- Q(high, wait): 25.6795
+- Q(low, search): 23.6770
+- Q(low, wait): 23.1423
+- Q(low, recharge): 24.5713
 
-Final Average Reward: 2184.20 ± 20.15
+Final Average Reward: 2670.60 ± 40.54

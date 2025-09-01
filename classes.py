@@ -335,7 +335,11 @@ class RecyclingRobotExperiment:
         discount_factor: float = 0.9,
         epsilon: float = 0.1,
         epsilon_decay: float = 0.995,
-        min_epsilon: float = 0.01
+        min_epsilon: float = 0.01,
+        alpha: float = 0.9,
+        beta: float = 0.6,
+        r_search: float = 3.0,
+        r_wait: float = 1.0
     ) -> None:
         """
         Initialize the experiment.
@@ -347,6 +351,10 @@ class RecyclingRobotExperiment:
             epsilon: Initial exploration rate
             epsilon_decay: Decay rate for epsilon per epoch
             min_epsilon: Minimum epsilon value
+            alpha: MDP parameter - probability of staying high when searching in high state
+            beta: MDP parameter - probability of staying low when searching in low state
+            r_search: Reward for searching action
+            r_wait: Reward for waiting action
         """
         self.steps_per_epoch = steps_per_epoch
         self.learning_rate = learning_rate
@@ -355,8 +363,13 @@ class RecyclingRobotExperiment:
         self.epsilon_decay = epsilon_decay
         self.min_epsilon = min_epsilon
 
-        # Initialize environment and agent
-        self.env = RecyclingRobotEnvironment()
+        # Initialize environment with configurable parameters
+        self.env = RecyclingRobotEnvironment(
+            alpha=alpha,
+            beta=beta,
+            r_search=r_search,
+            r_wait=r_wait
+        )
 
         # Set up plotting style
         plt.style.use('default')
