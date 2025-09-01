@@ -116,16 +116,6 @@ class RecyclingRobotExperiment:
         # Cria mapa de calor da política
 ```
 
-### 2.5 Sistema de Treinamento
-
-- **Épocas**: 100 épocas por execução
-- **Passos por época**: 1.000 passos
-- **Múltiplas execuções**: 5 execuções independentes para média
-- **Parâmetros de aprendizado**:
-  - α (learning rate): 0.1
-  - γ (discount factor): 0.9
-  - ε inicial: 0.3, decaimento: 0.995, mínimo: 0.01
-
 ## 3. Parâmetros Escolhidos
 
 ### 3.1 Justificativa dos Parâmetros do Ambiente
