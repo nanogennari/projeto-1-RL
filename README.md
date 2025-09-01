@@ -42,11 +42,10 @@ As transições seguem probabilidades estocásticas definidas pelos parâmetros 
 
 ### 2.1 Arquitetura do Sistema
 
-O projeto foi estruturado em três módulos principais:
+O projeto foi estruturado em dois módulos principais:
 
-1. **`recycling_robot.py`**: Classes do ambiente e agente TD
-2. **`train.py`**: Script de treinamento com sistema de épocas
-3. **`visualize.py`**: Módulo de visualização de resultados
+1. **`classes.py`**: Todas as classes do sistema (ambiente, agente TD, experimento)
+2. **`main.py`**: Script unificado para treinamento e visualização
 
 ### 2.2 Classe `RecyclingRobotEnvironment`
 
@@ -54,6 +53,12 @@ O projeto foi estruturado em três módulos principais:
 class RecyclingRobotEnvironment:
     def __init__(self, alpha=0.7, beta=0.6, r_search=3.0, r_wait=1.0):
         # Implementa o MDP com transições estocásticas
+
+    def step(self, action: Action) -> tuple[State, float]:
+        # Executa ação e retorna próximo estado e recompensa
+
+    def get_valid_actions(self, state: State) -> list[Action]:
+        # Retorna ações válidas para um estado
 ```
 
 **Características principais:**
@@ -69,6 +74,15 @@ class TemporalDifferenceAgent:
     def __init__(self, environment, learning_rate=0.1,
                  discount_factor=0.9, epsilon=0.1):
         # Implementa TD(0) com política ε-greedy
+
+    def select_action(self, state: State) -> Action:
+        # Seleciona ação usando política ε-greedy
+
+    def update_q_value(self, state, action, reward, next_state):
+        # Atualiza Q-values usando regra TD(0)
+
+    def get_policy(self) -> dict[State, Action]:
+        # Extrai política greedy dos Q-values
 ```
 
 **Algoritmo TD(0) implementado:**
@@ -82,7 +96,27 @@ Q(s,a) ← Q(s,a) + α[r + γ max_a' Q(s',a') - Q(s,a)]
 - Decaimento de ε ao longo do treinamento
 - Extração de política ótima greedy
 
-### 2.4 Sistema de Treinamento
+### 2.4 Classe `RecyclingRobotExperiment`
+
+```python
+class RecyclingRobotExperiment:
+    def __init__(self, steps_per_epoch=1000, learning_rate=0.1, ...):
+        # Pipeline completo de experimento
+
+    def train_agent(self, num_epochs: int) -> TrainingResults:
+        # Treina agente por múltiplas épocas
+
+    def run_complete_experiment(self, num_runs=5, num_epochs=100):
+        # Executa experimento completo com visualizações
+
+    def plot_training_curve(self, all_rewards, ...):
+        # Gera gráfico de curva de aprendizado
+
+    def create_policy_heatmap(self, agent, ...):
+        # Cria mapa de calor da política
+```
+
+### 2.5 Sistema de Treinamento
 
 - **Épocas**: 100 épocas por execução
 - **Passos por época**: 1.000 passos
@@ -113,7 +147,7 @@ Q(s,a) ← Q(s,a) + α[r + γ max_a' Q(s',a') - Q(s,a)]
 ### 4.1 Performance de Aprendizado
 
 **Métricas finais (média de 5 execuções):**
-- **Recompensa final**: 2.183,80 ± 36,63
+- **Recompensa final**: 2.186,40 ± 55,11
 - **Recompensa máxima**: ~2.220
 - **Convergência**: Estabilização após ~30 épocas
 
@@ -180,9 +214,8 @@ Este projeto foi desenvolvido como exercício para a disciplina de Aprendizado p
 ### A. Lista de Arquivos
 
 **Código fonte:**
-- `recycling_robot.py`: Implementação das classes principais (ambiente e agente TD)
-- `train.py`: Script de treinamento com sistema de épocas
-- `visualize.py`: Script de visualização e geração de gráficos
+- `classes.py`: Todas as classes do sistema (ambiente, agente TD, experimento)
+- `main.py`: Script unificado para treinamento e visualização
 
 **Resultados gerados:**
 - `rewards.txt`: Dados de recompensa acumulada por época
@@ -211,9 +244,6 @@ uv sync
 
 **Execução do projeto:**
 ```bash
-# Treinar o agente
-uv run python train.py
-
-# Gerar visualizações
-uv run python visualize.py
+# Executar treinamento completo com visualizações
+uv run python main.py
 ```
