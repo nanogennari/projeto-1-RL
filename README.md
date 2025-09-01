@@ -87,7 +87,7 @@ class TemporalDifferenceAgent:
 
 **Algoritmo TD(0) implementado:**
 ```
-Q(s,a) ← Q(s,a) + α[r + γ max_a' Q(s',a') - Q(s,a)]
+Q(s,a) ← Q(s,a) + lr[r + γ max_a' Q(s',a') - Q(s,a)]
 ```
 
 **Características:**
@@ -127,7 +127,7 @@ Os parâmetros ideais foram encontrados através de exploração sistemática te
 - **r_wait = 1.0**: Recompensa por espera
 
 ### 3.2 Parâmetros de Aprendizado TD
-- **Learning rate = 0.05**: Taxa de aprendizado otimizada
+- **Learning rate (lr) = 0.05**: Taxa de aprendizado otimizada
 - **Discount factor (γ) = 0.9**: Fator de desconto para recompensas futuras  
 - **Epsilon (ε) = 0.1**: Taxa de exploração ε-greedy
 
